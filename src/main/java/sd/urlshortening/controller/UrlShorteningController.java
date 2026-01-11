@@ -44,4 +44,9 @@ public class UrlShorteningController {
         service.deleteByShortCode(shortCode);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/shorten/{shortCode}/stats")
+    ResponseEntity<?> getStatsByShortenCode(@PathVariable String shortCode) {
+        return ResponseEntity.ok(service.getStatsByShortCode(shortCode));
+    }
 }

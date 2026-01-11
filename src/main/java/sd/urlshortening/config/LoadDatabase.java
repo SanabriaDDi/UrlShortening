@@ -6,7 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import sd.urlshortening.entity.UrlShortening;
-import sd.urlshortening.repository.UrlShorteningRepository;
+import sd.urlshortening.service.UrlShorteningService;
 
 @Configuration
 public class LoadDatabase {
@@ -14,10 +14,11 @@ public class LoadDatabase {
             LoggerFactory.getLogger(LoadDatabase.class);
 
     @Bean
-    CommandLineRunner initDatabase(UrlShorteningRepository urlShorteningRepository) {
+    CommandLineRunner initDatabase(UrlShorteningService urlShorteningService) {
         return args -> {
-            final UrlShortening urlShortening1 = new UrlShortening("https://www.google.com.mx");
-            log.info("Preloaded: " + urlShorteningRepository.save(urlShortening1));
+            log.info("Preloaded: " + urlShorteningService.createUrlShortening(
+                    new UrlShortening("https://www.google.com.mx")
+            ));
         };
     }
 }

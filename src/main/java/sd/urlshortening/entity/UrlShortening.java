@@ -16,6 +16,7 @@ public class UrlShortening {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String url;
+    private Long accessCount;
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

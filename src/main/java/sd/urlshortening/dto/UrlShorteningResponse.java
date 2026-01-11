@@ -1,13 +1,13 @@
 package sd.urlshortening.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 import sd.urlshortening.utils.Base62Converter;
 
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 public class UrlShorteningResponse {
