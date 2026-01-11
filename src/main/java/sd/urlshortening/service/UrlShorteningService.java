@@ -1,6 +1,7 @@
 package sd.urlshortening.service;
 
 import org.springframework.stereotype.Service;
+import sd.urlshortening.dto.RegisterUrlShorten;
 import sd.urlshortening.dto.UrlShorteningResponse;
 import sd.urlshortening.dto.UrlShorteningWithAccessCountResponse;
 import sd.urlshortening.entity.UrlShortening;
@@ -28,9 +29,11 @@ public class UrlShorteningService {
         )).toList();
     }
 
-    public UrlShorteningResponse createUrlShortening(UrlShortening urlShortening) {
-        urlShortening.setAccessCount(0L);
-        final UrlShortening newUrlShortening = repository.save(urlShortening);
+    public UrlShorteningResponse createUrlShortening(RegisterUrlShorten urlShortening) {
+        final UrlShortening newUrlShorten = new UrlShortening();
+        newUrlShorten.setUrl(urlShortening.getUrl());
+        newUrlShorten.setAccessCount(0L);
+        final UrlShortening newUrlShortening = repository.save(newUrlShorten);
 
         return new UrlShorteningResponse(
                 newUrlShortening.getId(),
@@ -55,7 +58,7 @@ public class UrlShorteningService {
         );
     }
 
-    public UrlShorteningResponse saveUrl(UrlShortening updateUrl, String shortCode) {
+    public UrlShorteningResponse saveUrl(RegisterUrlShorten updateUrl, String shortCode) {
         final Long urlShorteningId = Base62Converter.toDecimal(shortCode);
         final UrlShortening urlShortening = repository.findById(urlShorteningId)
                 .orElseThrow(() -> new UrlShorteningNotFoundException(shortCode));

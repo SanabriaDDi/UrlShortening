@@ -1,7 +1,9 @@
 package sd.urlshortening.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sd.urlshortening.dto.RegisterUrlShorten;
 import sd.urlshortening.dto.UrlShorteningResponse;
 import sd.urlshortening.entity.UrlShortening;
 import sd.urlshortening.service.UrlShorteningService;
@@ -22,7 +24,7 @@ public class UrlShorteningController {
     }
 
     @PostMapping("/shorten")
-    ResponseEntity<?> newUrl(@RequestBody UrlShortening newUrl) {
+    ResponseEntity<?> newUrl(@Valid @RequestBody RegisterUrlShorten newUrl) {
         UrlShorteningResponse newUrlCreated = service.createUrlShortening(newUrl);
         //TODO use spring HATEOAS to obtain self URL
         return ResponseEntity.created(URI.create("localhost:8080/shorten/" + newUrlCreated.getShortCode()))
@@ -35,7 +37,8 @@ public class UrlShorteningController {
     }
 
     @PutMapping("/shorten/{shortCode}")
-    ResponseEntity<?> replaceUrlByCode(@RequestBody UrlShortening updateUrl, @PathVariable String shortCode) {
+    ResponseEntity<?> replaceUrlByCode(
+            @Valid @RequestBody RegisterUrlShorten updateUrl, @PathVariable String shortCode) {
         return ResponseEntity.ok(service.saveUrl(updateUrl, shortCode));
     }
 
