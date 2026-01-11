@@ -1,0 +1,9 @@
+method: put
+url: /shorten/1
+requestBody:
+  type: application/json
+  data: "{\r
+
+    \    \"url\": \"https://www.facebook.com\"\r
+
+    }"

@@ -33,4 +33,9 @@ public class UrlShorteningController {
     ResponseEntity<?> getOneByShortCode(@PathVariable String shortCode) {
         return ResponseEntity.ok(service.getOneByShortCode(shortCode));
     }
+
+    @PutMapping("/shorten/{shortCode}")
+    ResponseEntity<?> replaceUrlByCode(@RequestBody UrlShortening updateUrl, @PathVariable String shortCode) {
+        return ResponseEntity.ok(service.saveUrl(updateUrl, shortCode));
+    }
 }

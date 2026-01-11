@@ -50,4 +50,18 @@ public class UrlShorteningService {
                 urlShortening.getUpdatedAt()
         );
     }
+
+    public UrlShorteningResponse saveUrl(UrlShortening updateUrl, String shortCode) {
+        final Long urlShorteningId = Base62Converter.toDecimal(shortCode);
+        final UrlShortening urlShortening = repository.findById(urlShorteningId)
+                .orElseThrow(() -> new UrlShorteningNotFoundException(shortCode));
+        urlShortening.setUrl(updateUrl.getUrl());
+        final UrlShortening urlShorteningUpdated = repository.save(urlShortening);
+        return new UrlShorteningResponse(
+                urlShorteningUpdated.getId(),
+                urlShorteningUpdated.getUrl(),
+                urlShorteningUpdated.getCreatedAt(),
+                urlShorteningUpdated.getUpdatedAt()
+        );
+    }
 }
