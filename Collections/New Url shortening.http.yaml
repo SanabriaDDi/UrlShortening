@@ -1,0 +1,9 @@
+method: post
+url: /shorten
+requestBody:
+  type: application/json
+  data: "{\r
+
+    \    \"url\": \"www.google.com.mx\"\r
+
+    }"
