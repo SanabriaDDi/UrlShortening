@@ -64,4 +64,11 @@ public class UrlShorteningService {
                 urlShorteningUpdated.getUpdatedAt()
         );
     }
+
+    public void deleteByShortCode(String shortCode) {
+        final Long urlShorteningId = Base62Converter.toDecimal(shortCode);
+        final UrlShortening urlShortening = repository.findById(urlShorteningId)
+                .orElseThrow(() -> new UrlShorteningNotFoundException(shortCode));
+        repository.deleteById(urlShorteningId);
+    }
 }

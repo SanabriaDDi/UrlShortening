@@ -38,4 +38,10 @@ public class UrlShorteningController {
     ResponseEntity<?> replaceUrlByCode(@RequestBody UrlShortening updateUrl, @PathVariable String shortCode) {
         return ResponseEntity.ok(service.saveUrl(updateUrl, shortCode));
     }
+
+    @DeleteMapping("/shorten/{shortCode}")
+    ResponseEntity<?> deleteByShortCode(@PathVariable String shortCode) {
+        service.deleteByShortCode(shortCode);
+        return ResponseEntity.noContent().build();
+    }
 }
