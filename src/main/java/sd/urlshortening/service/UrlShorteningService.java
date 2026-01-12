@@ -47,14 +47,16 @@ public class UrlShorteningService {
         final Long urlShorteningId = Base62Converter.toDecimal(shortCode);
         final UrlShortening urlShortening = repository.findById(urlShorteningId)
                 .orElseThrow(() -> new UrlShorteningNotFoundException(shortCode));
-        urlShortening.setAccessCount(urlShortening.getAccessCount() != null ? urlShortening.getAccessCount() + 1 : 1);
-        final UrlShortening urlShorteningUpdated = repository.save(urlShortening);
+        final int rowsAffected = repository.incrementAccessCount(urlShorteningId);
+        if (rowsAffected == 0) {
+            throw new UrlShorteningNotFoundException(shortCode);
+        }
 
         return new UrlShorteningResponse(
-                urlShorteningUpdated.getId(),
-                urlShorteningUpdated.getUrl(),
-                urlShorteningUpdated.getCreatedAt(),
-                urlShorteningUpdated.getUpdatedAt()
+                urlShortening.getId(),
+                urlShortening.getUrl(),
+                urlShortening.getCreatedAt(),
+                urlShortening.getUpdatedAt()
         );
     }
 
